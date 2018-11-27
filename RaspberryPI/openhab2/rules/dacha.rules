@@ -1,0 +1,63 @@
+var Timer timer_hall = null
+
+rule "Light in Home"
+    when
+        Item LightHome received command
+    then
+        switch(receivedCommand) {
+            case ON : sendHttpGetRequest("http://192.168.1.24:8080/light/on")
+            case OFF : sendHttpGetRequest("http://192.168.1.24:8080/light/off")
+		}
+end
+
+
+rule "Light in Garage"
+    when
+        Item LightGarage received command
+    then
+        switch(receivedCommand) {
+            case ON : sendHttpGetRequest("http://192.168.1.25:8080/light/on")
+            case OFF : sendHttpGetRequest("http://192.168.1.25:8080/light/off")
+                }
+end
+
+rule "Signaling in Garage"
+    when
+        Item SignalingGarage received command
+    then
+        switch(receivedCommand) {
+            case ON : sendHttpGetRequest("http://192.168.1.25:8080/buzzer/on")
+            case OFF : sendHttpGetRequest("http://192.168.1.25:8080/buzzer/off")
+                }
+end
+
+rule "Signal on move"
+    when
+        Item Move changed from OFF to ON
+    then
+
+	if (Signaling.state == ON) SignalingGarage.sendCommand(ON)
+end
+
+rule "Signal on move"
+    when
+        Item Signaling changed from ON to OFF
+    then
+
+        SignalingGarage.sendCommand(OFF)
+end
+
+rule "Push Notifactions"
+    when
+        Item Notifactions received command
+    then
+       var String receipt = sendPushoverMessage(pushoverBuilder("Attention, front door opened!").withEmergencyPriority())
+
+// wait for your cancel condition
+
+if( receipt !== null ) {
+    cancelPushoverEmergency(receipt)
+    receipt = null
+}
+
+end

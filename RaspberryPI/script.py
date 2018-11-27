@@ -8,7 +8,7 @@ topics = { 'move':'garage/move', 'temperatureHome':'home/temperature', 'temperat
 
 if __name__ == "__main__":
 	
-    mqtt_ip = "localhost"
+    mqtt_ip = "192.168.1.9"
     garage_ip = "192.168.1.25"
     home_ip = "192.168.1.24"
     

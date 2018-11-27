@@ -1,0 +1,18 @@
+DateTime Date  "Date [%1$tA, %1$td.%1$tm.%1$tY %1$tH:%1$tM]"  { channel="ntp:ntp:demo:dateTime" }
+
+Group signal "Сигнализация" <soundvolume>
+Group home "Дом"
+
+Switch LightHome "Свет" <light>
+String TemperatureHome "[%s]" { mqtt="<[mosquitto:home/temperature:state:default]"}
+Switch DoorHome "Дверь" {mqtt=">[mosquitto:home/door:command:ON:1], >[mosquitto:home/door:command:OFF:0], <[mosquitto:home/door:state:ON:1], <[mosquitto:home/door:state:OFF:0]"}
+
+
+Switch LightGarage "Свет" <light>
+Switch Signaling "Сигнализация"
+Switch SignalingGarage "Оповещение" <soundvolume>
+String TemperatureGarage "Температура [%s]" { mqtt="<[mosquitto:garage/temperature:state:default]"}
+Switch Move  "Движение" {mqtt="<[mosquitto:garage/move:state:ON:1],<[mosquitto:garage/move:state:OFF:0]"}
+String Gas "Газ [%s]" <fire> { mqtt="<[mosquitto:garage/gas:state:default]"}
+Switch Notifactions 
+Switch DoorGarage "Дверь" {mqtt=">[mosquitto:garage/door:command:ON:1], >[mosquitto:garage/door:command:ON:1], <[mosquitto:garage/door:state:ON:1], <[mosquitto:garage/door:state:OFF:0]"}

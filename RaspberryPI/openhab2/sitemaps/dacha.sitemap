@@ -1,0 +1,27 @@
+sitemap dacha label="Дача" {
+
+Frame label="Date" {
+        Text item=Date icon="calendar"
+}
+
+    Frame label="Дом"{
+	Text item=TemperatureHome icon="temperature"
+    Frame {
+	Switch item=DoorHome
+	Switch item=LightHome
+	}
+    }
+
+    Frame label="Гараж"{
+    Text item=TemperatureGarage icon="temperature"
+	Frame {
+	Switch item=Move
+	Switch item=DoorGarage
+	Switch item=LightGarage
+	Group item=signal{
+	Switch item=Signaling
+	Switch item=SignalingGarage}
+}
+ }
+}
+
